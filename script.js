@@ -18,4 +18,29 @@ function showTime() {
 
     setTimeout(showTime, 1000);
 }
-  showTime();
+showTime();
+
+// 2. Greeting
+
+function showGreeting() {
+    const greeting = document.querySelector('.greeting');
+    const date = new Date();
+    const hours = date.getHours();
+
+    function getTimeOfDay() {
+        if (hours < 6) {
+            return 'night';
+        } else if (hours < 12) {
+            return 'morning';
+        } else if (hours < 17) {
+            return 'afternoon';
+        } else {
+            return 'evening';
+        }
+    }
+    const timeOfDay = getTimeOfDay();
+    const greetingText = `Good ${timeOfDay}`;
+    greeting.textContent = greetingText;
+    setTimeout(showGreeting, 1000);
+}
+showGreeting();

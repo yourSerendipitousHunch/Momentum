@@ -10,13 +10,12 @@
 }
 
 body {
-  min-width: 480px;
   min-height: 100vh;
   font-family: 'Arial', sans-serif;
   font-size: 16px;
   color: #fff;
   text-align: center;
-  background: url("../assets/img/bg.jpg") center/cover, rgba(0, 0, 0, 0.5);
+  background: url("../assets/img/05.jpeg") center/cover, rgba(0, 0, 0, 0.5);
   background-blend-mode: multiply;
   transition: background-image 1s ease-in-out;
 }
@@ -281,6 +280,39 @@ body {
 
   .name {
     font-size: 32px;
+    padding: 5px;
+  }
+}
+
+@media (max-width: 580px) {
+  .time {
+    min-height: 50px;
+    font-size: 60px;    
+  }
+
+  .greeting-container {
+    min-height: 30px;
+    font-size: 24px;
+  }
+  .name {
+    font-size: 24px;
+    padding: 5px;
+  }
+}
+
+@media (max-width: 420px) {
+  .time {
+    min-height: 30px;
+    font-size: 50px;    
+  }
+  .greeting-container {
+    min-height: 20px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .name {
+    font-weight: 700;
+    font-size: 14px;
     padding: 5px;
   }
 }

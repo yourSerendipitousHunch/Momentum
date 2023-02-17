@@ -41,6 +41,31 @@ function showGreeting() {
     const timeOfDay = getTimeOfDay();
     const greetingText = `Good ${timeOfDay}`;
     greeting.textContent = greetingText;
-    setTimeout(showGreeting, 1000);
+
+    // The user can enter their name
+
+    const name = document.querySelector('.name');
+
+    name.addEventListener('focus', () => {
+        name.placeholder = '';
+      });
+
+      name.addEventListener('blur', () => {
+        name.placeholder = '[Enter your name]';
+      });
+
+      function setLocalStorage() {
+        localStorage.setItem('name', name.value);
+    }
+    window.addEventListener('beforeunload', setLocalStorage)
+
+    function getLocalStorage() {
+        if(localStorage.getItem('name')) {
+        name.value = localStorage.getItem('name');
+        }
+    }
+    window.addEventListener('load', getLocalStorage)
+
+        setTimeout(showGreeting, 1000);
 }
 showGreeting();

@@ -71,6 +71,10 @@ function showGreeting() {
     function setBg() {
 
     const body = document.querySelector('body');
+
+    function getRandomNum() {
+        Math.floor(Math.random() * 5);
+    }
     
     if (timeOfDay == 'night') {
         body.style.backgroundImage = "url('assets/img/night/01.jpeg')";
@@ -81,31 +85,6 @@ function showGreeting() {
     } else if (timeOfDay == 'evening') {
         body.style.backgroundImage = "url('assets/img/evening/01.jpeg')";
     } 
-    
-    // Images can be leafed out by clicks on arrows located on the sides of the screen
-    
-    // night imgs
-    
-    const night1 = "url('assets/img/night/01.jpeg')";
-    const night2 = "url('assets/img/night/02.jpg')";
-    const night3 = "url('assets/img/night/03.png')";
-    const night4 = "url('assets/img/night/04.png')";
-    const night5 = "url('assets/img/night/05.png')";
-    
-    const nightimgs = [night1, night2, night3, night4, night5];
-    
-    const prevImg = document.querySelector('.slide-prev');
-    const nextImg = document.querySelector('.slide-next');
-    
-    let n = 0;
-    
-    nextImg.addEventListener('click', () => {
-        ++n;
-        body.style.backgroundImage = nightimgs[n];
-        if (n > 4) {
-            n = 0;
-        }
-    });
     }
     setBg();
 

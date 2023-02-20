@@ -48,46 +48,51 @@ function showGreeting() {
 
     name.addEventListener('focus', () => {
         name.placeholder = '';
-      });
+    });
 
-      name.addEventListener('blur', () => {
+    name.addEventListener('blur', () => {
         name.placeholder = '[Enter your name]';
-      });
+    });
 
-      function setLocalStorage() {
+    function setLocalStorage() {
         localStorage.setItem('name', name.value);
     }
     window.addEventListener('beforeunload', setLocalStorage)
 
     function getLocalStorage() {
         if(localStorage.getItem('name')) {
-        name.value = localStorage.getItem('name');
+            name.value = localStorage.getItem('name');
         }
     }
     window.addEventListener('load', getLocalStorage)
 
     // 3. Image Slider
 
-    function setBg() {
-
     const body = document.querySelector('body');
+    let imageIndex = 0;
 
-    function getRandomNum() {
-        Math.floor(Math.random() * 5);
+    const imageUrls = {
+        night: ['assets/img/night/01.jpg', 'assets/img/night/02.jpg', 'assets/img/night/03.jpg'],
+        morning: ['assets/img/morning/01.jpg', 'assets/img/morning/02.jpg', 'assets/img/morning/03.jpg'],
+        afternoon: ['assets/img/afternoon/01.jpg', 'assets/img/afternoon/02.jpg', 'assets/img/afternoon/03.jpg'],
+        evening: ['assets/img/evening/01.jpg', 'assets/img/evening/02.jpg', 'assets/img/evening/03.jpg']
+    };
+
+    function setBg() {
+        body.style.backgroundImage = `url(${imageUrls[timeOfDay][imageIndex]})`;
     }
-    
-    if (timeOfDay == 'night') {
-        body.style.backgroundImage = "url('assets/img/night/01.jpeg')";
-    } else if (timeOfDay == 'morning') {
-        body.style.backgroundImage = "url('assets/img/morning/01.jpg')";
-    } else if (timeOfDay == 'afternoon') {
-        body.style.backgroundImage = "url('assets/img/afternoon/01.jpeg')";
-    } else if (timeOfDay == 'evening') {
-        body.style.backgroundImage = "url('assets/img/evening/01.jpeg')";
-    } 
-    }
+
+    const prevButton = document.querySelector('.slide-prev');
+    prevButton.addEventListener('click', () => {
+        imageIndex = (imageIndex - 1 + imageUrls[timeOfDay].length) % imageUrls[timeOfDay].length;
+        setBg();
+    });
+
+    const nextButton = document.querySelector('.slide-next');
+    nextButton.addEventListener('click', () => {
+        imageIndex = (imageIndex + 1) % imageUrls[timeOfDay].length;
+        setBg();
+    });
     setBg();
-
-    setTimeout(showGreeting, 1000);
 }
 showGreeting();

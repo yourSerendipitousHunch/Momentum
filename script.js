@@ -66,6 +66,12 @@ function showGreeting() {
     }
     window.addEventListener('load', getLocalStorage)
 
+    // input adapt to the amount of content 
+    
+    name.addEventListener('input', () => {
+        name.setAttribute('size', name.value.length);
+      });
+
     // 3. Image Slider
 
     const body = document.querySelector('body');
@@ -94,5 +100,27 @@ function showGreeting() {
         setBg();
     });
     setBg();
+
+    // Weather widget
+
+    const weatherIcon = document.querySelector('.weather-icon');
+    const temperature = document.querySelector('.temperature');
+    const weatherDescription = document.querySelector('.weather-description');
+
+    const cityInput = document.querySelector('.city');
+    cityInput.addEventListener('change', getWeather);
+
+    async function getWeather() {
+        const city = cityInput.value;
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=en&appid=96ff6ee9485f09be21bf92cfb9518362&units=metric`;
+        const res = await fetch(url);
+        const data = await res.json();
+
+        weatherIcon.className = 'weather-icon owf';
+        weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+        temperature.textContent = `${data.main.temp}°C`;
+        weatherDescription.textContent = data.weather[0].description;
+      }
+      getWeather()
 }
 showGreeting();

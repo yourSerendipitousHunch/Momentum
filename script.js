@@ -1,3 +1,5 @@
+import playList from './playList.js';
+
 // 1. Clock and calendar
 
 function showTime() {
@@ -143,21 +145,93 @@ function showGreeting() {
 
 // 5. Quote of the day widget
 
+// Define a global variable to store the quotes
+let quotes = [];
+
 async function getQuotes() {  
     const res = await fetch('data.json');
     const data = await res.json(); 
 
+    // Store the quotes in the global variable
+    quotes = data;
+
+    // Display the first quote on page load
+    displayQuote();
+}
+
+function displayQuote() {
     const quoteText = document.querySelector('.quote');
     const author = document.querySelector('.author');
 
-    const randomIndex = Math.floor(Math.random() * data.length);
-    const randomQuote = data[randomIndex];
+    // Randomly select a quote from the stored quotes
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    const quote = quotes[randomIndex];
 
-    quoteText.textContent = randomQuote.text;
-    author.textContent = randomQuote.author;
+    // Display the selected quote and author
+    quoteText.textContent = quote.text;
+    author.textContent = quote.author;
 }
 
+// Call the getQuotes function on page load
 getQuotes();
+
+// Add an event listener to the change-quote button
+const changeQuote= document.querySelector('.change-quote');
+changeQuote.addEventListener('click', displayQuote);
+
+// 6. Audio player
+
+const playerControls = document.querySelector('.player-controls');
+const playListContainer = document.querySelector('.play-list');
+const audio = new Audio();
+let isPlay = false;
+let playNum = 0;
+
+function togglePlay() {
+    if (!isPlay) {
+      playAudio(playNum);
+      playerControls.querySelector('.play').classList.add('pause');
+      isPlay = true;
+    } else {
+      audio.pause();
+      playerControls.querySelector('.play').classList.remove('pause');
+      isPlay = false;
+    }
+  }  
+
+function playAudio(num) {
+  audio.src = playList[num].src;
+  audio.play();
+  playerControls.querySelector('.play').classList.add('pause');
+  isPlay = true;
+}
+
+function playNext() {
+  playNum++;
+  if (playNum > playList.length - 1) {
+    playNum = 0;
+  }
+  playAudio(playNum);
+}
+
+function playPrev() {
+  playNum--;
+  if (playNum < 0) {
+    playNum = playList.length - 1;
+  }
+  playAudio(playNum);
+}
+
+playerControls.querySelector('.play').addEventListener('click', togglePlay);
+playerControls.querySelector('.play-next').addEventListener('click', playNext);
+playerControls.querySelector('.play-prev').addEventListener('click', playPrev);
+
+playList.forEach(track => {
+  const li = document.createElement('li');
+  li.classList.add('play-item');
+  li.textContent = track.title;
+  playListContainer.append(li);
+});
 
 }
 showGreeting();

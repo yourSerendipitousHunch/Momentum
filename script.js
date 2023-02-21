@@ -123,12 +123,23 @@ function showGreeting() {
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=en&appid=96ff6ee9485f09be21bf92cfb9518362&units=metric`;
         const res = await fetch(url);
         const data = await res.json();
-
+      
         weatherIcon.className = 'weather-icon owf';
         weatherIcon.classList.add(`owf-${data.weather[0].id}`);
         temperature.textContent = `${data.main.temp}°C`;
         weatherDescription.textContent = data.weather[0].description;
+      
+        // Store the city in local storage
+        localStorage.setItem('city', city);
       }
-      getWeather()
+      
+      window.addEventListener('load', () => {
+        const city = localStorage.getItem('city');
+        if (city) {
+          cityInput.value = city;
+          getWeather();
+        }
+      });
+      
 }
 showGreeting();

@@ -78,27 +78,35 @@ function showGreeting() {
     let imageIndex = 0;
 
     const imageUrls = {
-        night: ['assets/img/night/01.jpg', 'assets/img/night/02.jpg', 'assets/img/night/03.jpg'],
-        morning: ['assets/img/morning/01.jpg', 'assets/img/morning/02.jpg', 'assets/img/morning/03.jpg'],
-        afternoon: ['assets/img/afternoon/01.jpg', 'assets/img/afternoon/02.jpg', 'assets/img/afternoon/03.jpg'],
-        evening: ['assets/img/evening/01.jpg', 'assets/img/evening/02.jpg', 'assets/img/evening/03.jpg']
+    night: ['assets/img/night/01.jpg', 'assets/img/night/02.jpg', 'assets/img/night/03.jpg'],
+    morning: ['assets/img/morning/01.jpg', 'assets/img/morning/02.jpg', 'assets/img/morning/03.jpg'],
+    afternoon: ['assets/img/afternoon/01.jpg', 'assets/img/afternoon/02.jpg', 'assets/img/afternoon/03.jpg'],
+    evening: ['assets/img/evening/01.jpg', 'assets/img/evening/02.jpg', 'assets/img/evening/03.jpg']
     };
 
     function setBg() {
-        body.style.backgroundImage = `url(${imageUrls[timeOfDay][imageIndex]})`;
+    const img = new Image();
+    img.src = imageUrls[timeOfDay][imageIndex];
+    img.onload = () => {
+        body.style.backgroundImage = `url(${img.src})`;
+    };
     }
 
     const prevButton = document.querySelector('.slide-prev');
     prevButton.addEventListener('click', () => {
-        imageIndex = (imageIndex - 1 + imageUrls[timeOfDay].length) % imageUrls[timeOfDay].length;
-        setBg();
+    imageIndex = (imageIndex - 1 + imageUrls[timeOfDay].length) % imageUrls[timeOfDay].length;
+    setBg();
     });
 
     const nextButton = document.querySelector('.slide-next');
     nextButton.addEventListener('click', () => {
-        imageIndex = (imageIndex + 1) % imageUrls[timeOfDay].length;
-        setBg();
+    imageIndex = (imageIndex + 1) % imageUrls[timeOfDay].length;
+    setBg();
     });
+
+    // disable background image in css
+    body.style.backgroundImage = "none";
+
     setBg();
 
     // Weather widget

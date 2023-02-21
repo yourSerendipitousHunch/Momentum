@@ -140,6 +140,26 @@ function showGreeting() {
           getWeather();
         }
       });
-      
+
+// 5. Quote of the day widget
+
+async function getQuotes() {  
+    const res = await fetch('data.json');
+    const data = await res.json(); 
+
+    const quoteText = document.querySelector('.quote');
+    const author = document.querySelector('.author');
+
+    const randomIndex = Math.floor(Math.random() * data.length);
+    const randomQuote = data[randomIndex];
+
+    quoteText.textContent = randomQuote.text;
+    author.textContent = randomQuote.author;
+}
+
+getQuotes();
+
 }
 showGreeting();
+
+

@@ -116,32 +116,37 @@ function showGreeting() {
     const weatherIcon = document.querySelector('.weather-icon');
     const temperature = document.querySelector('.temperature');
     const weatherDescription = document.querySelector('.weather-description');
-
+    
     const cityInput = document.querySelector('.city');
-    cityInput.addEventListener('change', getWeather);
-
+    cityInput.addEventListener('input', getWeather);
+    
     async function getWeather() {
-        const city = cityInput.value;
-        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=en&appid=96ff6ee9485f09be21bf92cfb9518362&units=metric`;
-        const res = await fetch(url);
-        const data = await res.json();
-      
-        weatherIcon.className = 'weather-icon owf';
-        weatherIcon.classList.add(`owf-${data.weather[0].id}`);
-        temperature.textContent = `${data.main.temp}°C`;
-        weatherDescription.textContent = data.weather[0].description;
-      
-        // Store the city in local storage
+      const city = cityInput.value;
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=en&appid=96ff6ee9485f09be21bf92cfb9518362&units=metric`;
+      const res = await fetch(url);
+      const data = await res.json();
+    
+      if (city) {
         localStorage.setItem('city', city);
+      } else {
+        localStorage.setItem('city', '');
+        temperature.textContent = '';
+        weatherDescription.textContent = '';
       }
-      
-      window.addEventListener('load', () => {
-        const city = localStorage.getItem('city');
-        if (city) {
-          cityInput.value = city;
-          getWeather();
-        }
-      });
+    
+      weatherIcon.className = 'weather-icon owf';
+      weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+      temperature.textContent = `${data.main.temp}°C`;
+      weatherDescription.textContent = data.weather[0].description;
+    }
+    
+    window.addEventListener('load', () => {
+      const city = localStorage.getItem('city');
+      if (city) {
+        cityInput.value = city;
+        getWeather();
+      }
+    });    
 
 // 5. Quote of the day widget
 

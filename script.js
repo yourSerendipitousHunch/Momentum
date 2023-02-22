@@ -191,24 +191,39 @@ const playListContainer = document.querySelector('.play-list');
 const audio = new Audio();
 let isPlay = false;
 let playNum = 0;
+let currentPosition = 0;
 
 function togglePlay() {
-    if (!isPlay) {
+  if (!isPlay) {
+    if (audio.paused) {
+      playNum = localStorage.getItem('playNum') || Math.floor(Math.random() * playList.length);
       playAudio(playNum);
-      playerControls.querySelector('.play').classList.add('pause');
-      isPlay = true;
     } else {
-      audio.pause();
-      playerControls.querySelector('.play').classList.remove('pause');
-      isPlay = false;
+      audio.play();
     }
-  }  
+    playerControls.querySelector('.play').classList.add('pause');
+    isPlay = true;
+  } else {
+    audio.pause();
+    playerControls.querySelector('.play').classList.remove('pause');
+    isPlay = false;
+    localStorage.setItem('currentPosition', audio.currentTime);
+  }
+}
 
 function playAudio(num) {
+  playNum = num;
   audio.src = playList[num].src;
+  currentPosition = localStorage.getItem('currentPosition') || 0;
+  if (currentPosition > 0) {
+    audio.currentTime = currentPosition;
+    currentPosition = 0;
+    localStorage.removeItem('currentPosition');
+  }
   audio.play();
   playerControls.querySelector('.play').classList.add('pause');
   isPlay = true;
+  localStorage.setItem('playNum', playNum);
 }
 
 function playNext() {

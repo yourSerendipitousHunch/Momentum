@@ -59,7 +59,7 @@ body {
 }
 
 .play-item::before {
-  content: "\2713";  
+  content: "\27A4";  
   position: absolute;
   left: 0;
   top: 2px;

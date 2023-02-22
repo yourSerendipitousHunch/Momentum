@@ -231,11 +231,14 @@ playerControls.querySelector('.play').addEventListener('click', togglePlay);
 playerControls.querySelector('.play-next').addEventListener('click', playNext);
 playerControls.querySelector('.play-prev').addEventListener('click', playPrev);
 
-playList.forEach(track => {
+playList.forEach((track, index) => {
   const li = document.createElement('li');
   li.classList.add('play-item');
-  li.textContent = track.title;
+  li.innerHTML = `${track.title}`;
   playListContainer.append(li);
+  li.addEventListener('click', () => {
+    playAudio(index);
+  });
 });
 
 }

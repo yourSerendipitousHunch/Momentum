@@ -45,6 +45,9 @@ body {
 }
 
 .play-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   position: relative;
   padding: 5px;
   padding-left: 20px;
@@ -59,11 +62,13 @@ body {
 }
 
 .play-item::before {
-  content: "\27A4";  
-  position: absolute;
-  left: 0;
-  top: 2px;
-  font-weight: 900;
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 20px;
+  background-size: 20px 20px;
+  background-image: url("../assets/svg/play.svg");
 }
 
 .item-active::before {
